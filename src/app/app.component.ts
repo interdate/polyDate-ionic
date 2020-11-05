@@ -252,6 +252,7 @@ export class AppComponent {
       this.menu_items_footer2[1].count = statistics.favoritedMe;
       this.api.isPay = data.isPay;
       this.api.isActivated = data.isActivated;
+      this.avatar = data.mainPhoto;
 
       if (!data.isActivated) {
         if (!this.canEnterNotActivatedUser.includes(this.api.pageName)) {
