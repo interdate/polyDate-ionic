@@ -37,6 +37,8 @@ export class ProfilePage implements OnInit {
 
   myId: any = false;
 
+  myProfile = false;
+
   constructor(public api: ApiQuery,
               public router: Router,
               public route: ActivatedRoute,
@@ -73,6 +75,7 @@ export class ProfilePage implements OnInit {
                         }
                     ];
                     console.log(userData);
+                    this.myProfile = true;
                     this.getUesr();
                     this.api.hideLoad();
                 });
@@ -200,7 +203,8 @@ export class ProfilePage implements OnInit {
 
   fullPagePhotos(isPrivate) {
       // alert(isPrivate);
-      if (!isPrivate) {
+      if (!isPrivate || this.myProfile) {
+          this.user.myProfile = this.myProfile;
           this.api.data['user'] = this.user;
           this.router.navigate(['/full-screen-profile']);
       } else {

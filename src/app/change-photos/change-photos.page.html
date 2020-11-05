@@ -24,6 +24,9 @@
         </div>
 
 
+        <ion-checkbox color="primary" class="mr-10" (ionChange)="updateShowOnHomepage()" [(ngModel)]="showOnHomepage"> </ion-checkbox>
+        <ion-label class="va-top mr-10">{{ dataPage?.texts.agreeOnHomePage }}</ion-label>
+
 
         <div class="description" *ngIf="photos?.length == 1 && dataPage?.noPhoto == dataPage?.photos[0].face">
             <div #desk>{{safeHtml(desk)}}</div>

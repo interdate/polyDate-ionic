@@ -32,6 +32,10 @@ export class DialogPage implements OnInit{
   checkedQm: number;
   cantWrite = false;
   contactWasChecked = false;
+  cantWriteAlert: any;
+  cantWriteMessage: any;
+
+
   constructor(public api: ApiQuery,
               public router: Router,
               public changeRef: ChangeDetectorRef,
@@ -44,6 +48,7 @@ export class DialogPage implements OnInit{
     this.api.back = false;
     this.user = this.api.data['user'];
     this.getMessages();
+    this.checkIfCanWrite();
   }
     getMessages() {
       //alert(44);
@@ -82,8 +87,11 @@ export class DialogPage implements OnInit{
 
 
   onOpenKeyboard() {
-    this.checkIfCanWrite();
-    this.scrollToBottom(100);
+    if (this.cantWrite) {
+      this.showCantWriteAlert();
+    } else {
+      this.scrollToBottom(100);
+    }
   }
   onCloseKeyboard() {
 
@@ -103,11 +111,15 @@ export class DialogPage implements OnInit{
   }
 
   ulToggle() {
-    this.showUl = !this.showUl;
-    if (!this.showUl) {
-      this.checkedQm = 0;
+    if (this.cantWrite) {
+      this.showCantWriteAlert();
     } else {
-      this.checkIfCanWrite();
+      this.showUl = !this.showUl;
+      if (!this.showUl) {
+        this.checkedQm = 0;
+      } else {
+        this.checkIfCanWrite();
+      }
     }
   }
 
@@ -400,19 +412,25 @@ export class DialogPage implements OnInit{
       this.api.http.get(this.api.apiUrl + '/writes/' + this.user.id, this.api.header).subscribe((res: any) => {
         if (!res.canContact) {
           this.cantWrite = true;
-          this.alertCtrl.create({
-            header: res.message.messageHeader,
-            message: res.message.messageText,
-            buttons: [
-              {
-                text: res.message.btns.ok,
-              }
-            ]
-          }).then(alert => alert.present());
+          this.cantWriteMessage = res.message;
+          this.showCantWriteAlert();
         }
       });
       this.contactWasChecked = true;
     }
+  }
+
+  showCantWriteAlert() {
+    this.alertCtrl.create({
+      header: this.cantWriteMessage.messageHeader,
+      message: this.cantWriteMessage.messageText,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: this.cantWriteMessage.btns.ok,
+        }
+      ]
+    }).then(alert => alert.present());
   }
 
   ionViewDidLoad() { }

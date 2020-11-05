@@ -53,7 +53,6 @@ export class NotificationsPage implements OnInit{
   }
 
   readAll() {
-    alert(1);
     this.api.http.get(this.api.apiUrl + '/read/all/notification?bingo=' + (this.tabs === 'bingo' ? 1 : 0), this.api.header).subscribe((res: any) => {
         // if (res.success) {
             this.users.forEach( (user: any) => {

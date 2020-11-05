@@ -309,19 +309,17 @@ export class HomePage implements OnInit {
     }
 
     getUsers(test = false) {
-       // alert('in get');
-     //
-     //        if (test) {
-     //            alert(1);
-     //        }
+
         this.splashScreen.hide();
         if ( !this.api.back ) {
             this.api.showLoad();
-            // alert(' will getUsers data');
-            // alert(this.params_str);
-            // alert(1);
+
+            if (!this.params.page) {
+                this.params.page = 1;
+                this.params_str = JSON.stringify(this.params);
+            }
+
             this.api.http.post(this.api.apiUrl + '/users/results', this.params_str, this.api.header).subscribe((data: any) => {
-            // alert(2);
 
             this.users = data.users;
             this.texts = data.texts;

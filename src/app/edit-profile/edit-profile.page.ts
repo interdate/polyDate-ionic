@@ -9,6 +9,8 @@ import {Events} from "@ionic/angular";
 import {IonContent} from "@ionic/angular";
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import * as $ from 'jquery';
+import {forEach} from "@angular-devkit/schematics";
+import {FormService} from "../form.service";
 
 @Component({
   selector: 'page-edit-profile',
@@ -34,6 +36,7 @@ export class EditProfilePage implements OnInit {
   allfields = '';
   step: any = 1;
   relationshipTypeHelper: any;
+  multipleFields: [];
 
 
   constructor(public api: ApiQuery,
@@ -42,7 +45,8 @@ export class EditProfilePage implements OnInit {
               public events: Events,
               private sanitizer: DomSanitizer,
               public keyboard: Keyboard,
-              public alertCtrl: AlertController) {}
+              public alertCtrl: AlertController,
+              private fs: FormService) {}
 
 
   ngOnInit() {
@@ -52,9 +56,11 @@ export class EditProfilePage implements OnInit {
      // this.keyboard.disableScroll(false);
       if (!this.api.thereForComplete) {
           this.edit_step(2);
-          // setTimeout(() => {
-          //     $('.container').scrollTop(99999);
-          // }, 400);
+          // $('.wrap').scrollTop(99999);
+          setTimeout(() => {
+              this.content.scrollToBottom(300);
+             // console.log()
+          }, 3000);
       } else {
           this.edit_step(1);
       }
@@ -78,7 +84,7 @@ export class EditProfilePage implements OnInit {
     }
 
   getValueLabel(field) {
-   return this.form[field].choices.find(x=>x.value == this.form[field].value).label;
+      return this.fs.getValueLabel(this.form, field, this.usersChooses);
   }
 
   isObject(val) {
@@ -89,27 +95,9 @@ export class EditProfilePage implements OnInit {
     return Array.isArray(val);
   }
 
-  async openSelect2(field, fieldTitle) {
+  openSelect2(field, fieldTitle) {
 
-    console.log(field);
-    const modal = await this.modalCtrl.create({
-      component: SelectModalPage,
-      componentProps: {
-        choices: field.choices,
-        title: field.label,
-        choseNow: this.usersChooses[fieldTitle],
-        search: fieldTitle == 'city' ? true : false
-      }
-    });
-    await modal.present();
-
-    modal.onDidDismiss().then(data => {
-      if(data.data) {
-        this.form[fieldTitle].value = data.data.value;
-        this.usersChooses[fieldTitle] = data.data.label;
-      }
-    });
-    //field.name
+    this.fs.openSelect2(this.form, fieldTitle, this.usersChooses);
 
   }
 
@@ -216,6 +204,7 @@ export class EditProfilePage implements OnInit {
     this.api.http.get(this.api.apiUrl + '/edit/profile?step=' + step, this.api.setHeaders(true)).subscribe((data: any) => {
         this.form = data.form;
         this.relationshipTypeHelper = data.relationshipTypeHelper;
+        this.multipleFields = data.multipleFields;
         console.log(data);
         this.formKeys = Object.keys(this.form);
         this.step = step;

@@ -252,8 +252,8 @@ export class LoginPage implements OnInit {
 
   setHeaders() {
     let myHeaders = new HttpHeaders();
-    myHeaders = myHeaders.append('username', encodeURIComponent(this.form.login.username.value));
-    myHeaders = myHeaders.append('password', encodeURIComponent(this.form.login.password.value));
+    myHeaders = myHeaders.append('username', encodeURIComponent(this.form.login.username.value.trim()));
+    myHeaders = myHeaders.append('password', encodeURIComponent(this.form.login.password.value.trim()));
     myHeaders = myHeaders.append('Content-type', 'application/json');
     myHeaders = myHeaders.append('Accept', '*/*');
     myHeaders = myHeaders.append('Access-Control-Allow-Origin', '*');

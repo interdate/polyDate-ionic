@@ -460,38 +460,38 @@ export class AppComponent {
 
 
   menu1Active(bool = true) {
-     var that = this;
-     setTimeout(() => {
-       that.activeMenu = 'menu1';
-       that.menu.enable(false, 'menu2');
-       that.menu.enable(false, 'menu3');
-       that.menu.enable(true, 'menu1');
-       if (bool) {
-       that.menu.open('menu1');
-       }
-     }, 400);
+    this.activeMenu = 'menu1';
+
+    if (bool) {
+      this.menu.enable(true, 'menu1').then(data => console.log(data));
+      this.menu.open('menu1');
+    } else {
+      setTimeout( () => {
+        this.menu.enable(true, 'menu1').then(data => console.log(data));
+      });
+    }
   }
 
 
   menu2Active() {
-    if (this.menu.isOpen('menu1')) {
-      this.activeMenu = 'menu2';
-      this.menu.enable(false, 'menu1');
+
+
+    this.menu.isOpen('menu1').then(isOpen => {
       this.menu.enable(true, 'menu2');
-      this.menu.enable(false, 'menu3');
-      this.menu.toggle('menu2');
-    }
+      this.menu.open('menu2');
+      this.activeMenu = 'menu2';
+    });
   }
 
 
   menu3Active() {
-    if (this.menu.isOpen('menu1')) {
-      this.activeMenu = 'menu3';
-      this.menu.enable(false, 'menu1').then(asd => console.log(asd + 'from 1'));
-      this.menu.enable(false, 'menu2').then(asd => console.log(asd + 'from 2'));
-      this.menu.enable(true, 'menu3').then(asd => console.log(asd + 'from 3'));
-      this.menu.open('menu3').then(val => console.log(val + 'from toggle'));
-    }
+    this.menu.isOpen('menu1').then(isOpen => {
+      if (isOpen) {
+        this.activeMenu = 'menu3';
+        this.menu.enable(true, 'menu3').then(asd => console.log(asd + 'from 3'));
+        this.menu.open('menu3').then(val => console.log(val + 'from toggle'));
+      }
+    });
   }
 
 
@@ -549,6 +549,7 @@ export class AppComponent {
   swipeFooterMenu() {
     // console.log('in swipe footer function');
     if ($('.more-btn').hasClass('menu-left')) {
+
       $('.more-btn').removeClass('menu-left');
       $('.more-btn .right-arrow').show();
       $('.more-btn .left-arrow').hide();
@@ -556,14 +557,23 @@ export class AppComponent {
       $('.more-btn').parents('.menu-one').animate({
         'margin-right': '-92%'
       }, 1000);
+
+      setTimeout(() => {
+        this.footerReturn();
+      }, 30000);
+
     } else {
-      $('.more-btn').addClass('menu-left');
-      $('.more-btn .left-arrow').show();
-      $('.more-btn .right-arrow').hide();
-      $('.more-btn').parents('.menu-one').animate({
-        'margin-right': '0'
-      }, 1000);
+      this.footerReturn();
     }
+  }
+
+  footerReturn() {
+    $('.more-btn').addClass('menu-left');
+    $('.more-btn .left-arrow').show();
+    $('.more-btn .right-arrow').hide();
+    $('.more-btn').parents('.menu-one').animate({
+      'margin-right': '0'
+    }, 1000);
   }
 
   removeBackground() {

@@ -71,12 +71,12 @@ export class ApiQuery {
   ) {
 
     this.url = 'https://polydate.co.il/';
-    this.apiUrl = 'https://polydate.co.il/api/v3/he';
-    this.openUrl = 'https://polydate.co.il/open_api/v3/he';
 
-    // this.url = 'https://polydate.co.il/app_dev.php';
-    // this.apiUrl = 'https://polydate.co.il/app_dev.php/api/v3/he';
-    // this.openUrl = 'https://polydate.co.il/app_dev.php/open_api/v3/he';
+    // this.apiUrl = 'https://polydate.co.il/api/v3/he';
+    // this.openUrl = 'https://polydate.co.il/open_api/v3/he';
+
+    this.apiUrl = 'https://polydate.co.il/app_dev.php/api/v3/he';
+    this.openUrl = 'https://polydate.co.il/app_dev.php/open_api/v3/he';
 
     this.footer = true;
     this.version = platform.is('android') ? 4 : 1;
@@ -394,7 +394,7 @@ export class ApiQuery {
           this.http.get(this.apiUrl + '/update/user/information', this.header).subscribe((res: any) => {
             if (res.needPopup) {
               this.alertCtrl.create({
-                header: res.texts.header,
+                // header: res.texts.header,
                 message: res.texts.message,
                 backdropDismiss: false,
                 buttons: [{
