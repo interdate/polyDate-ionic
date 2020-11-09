@@ -33,8 +33,8 @@ export class NotificationsPage implements OnInit{
   }
 
   toDialog(user) {
-    let user_id = user.user_id;
-    let bingo = user.bingo;
+    const user_id = user.user_id;
+    const bingo = user.bingo;
    this.api.http.post(this.api.apiUrl + '/notifications.json', {id: user.id}, this.api.setHeaders(true)).subscribe((data: any) => {
 
       this.users = data.users;

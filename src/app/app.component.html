@@ -138,18 +138,18 @@
           <ion-icon *ngIf="menu_item_footer1.icon != ''" name="{{menu_item_footer1.icon}}"></ion-icon>
           <img class="{{menu_item_footer1._id}}" src="{{menu_item_footer1.src_img}}">
           <div class="footerTitle">
-            {{menu_item_footer1.title}}
+            <div [ngClass]="{'footerChecked': api.checkedPage == menu_item_footer1._id }">{{menu_item_footer1.title}}</div>
           </div>
         </li>
       </ul>
       <ul class="menu-two">
-        <li *ngFor="let menu_item_footer2 of menu_items_footer2; let i = index"
+        <li class="{{menu_item_footer2._id}}" *ngFor="let menu_item_footer2 of menu_items_footer2; let i = index"
             (click)="openPage(menu_item_footer2)" [ngClass]="{'search-width': i == 3 }">
           <ion-icon *ngIf="menu_item_footer2.icon != ''" name="{{menu_item_footer2.icon}}"></ion-icon>
           <span *ngIf="is_login && menu_item_footer2.count != 0" class="inbox_count">{{ menu_item_footer2.count }}</span>
           <img class="{{menu_item_footer2._id}}" src="{{menu_item_footer2.src_img}}">
           <div class="footerTitle">
-            {{menu_item_footer2.title}}
+            <div [ngClass]="{'footerChecked': api.checkedPage == menu_item_footer2._id }">{{menu_item_footer2.title}}</div>
           </div>
         </li>
       </ul>

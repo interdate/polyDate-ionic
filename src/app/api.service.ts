@@ -53,6 +53,7 @@ export class ApiQuery {
   callAlert: any;
   audioCall: any;
   audioWait: any;
+  checkedPage: string;
 
   thereForComplete = false;
   alertPresent = false;
@@ -405,9 +406,10 @@ export class ApiQuery {
                 }]
               }).then(alert => {
                 if (!this.alertPresent) {
-                  alert.present().then( () => this.alertPresent = true);
-                  alert.onDidDismiss().then( () => this.alertPresent = false);
+                  alert.present().then(() => this.alertPresent = true);
                 }
+                alert.onDidDismiss().then( () => this.alertPresent = false);
+
               });
             } else {
               this.thereForComplete = true;

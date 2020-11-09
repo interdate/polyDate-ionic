@@ -51,7 +51,7 @@ export class DialogPage implements OnInit{
     this.checkIfCanWrite();
   }
     getMessages() {
-      //alert(44);
+      // alert(44);
       this.api.http.get(this.api.apiUrl + '/dialogs/' + this.user['id'] + '?per_page=30&page=' + this.page, this.api.setHeaders(true)).subscribe((data:any) => {
         //alert(1)
           $('.footerMenu').hide();

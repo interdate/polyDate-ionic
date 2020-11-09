@@ -79,8 +79,8 @@ export class HomePage implements OnInit {
             } else  if (!this.api.back) {
                 // alert(22);
                 this.params =  {
-                    action: "search",
-                    filter: this.api.data['filter'] ? this.api.data['filter'] : 'new',
+                    action: 'online',
+                    filter: this.api.data['filter'] ? this.api.data['filter'] : 'lastActivity',
                     list: '',
                     page: 1
                 };
@@ -120,13 +120,12 @@ export class HomePage implements OnInit {
             // alert(5)
             //
             // alert(this.params.filter);
-            if(this.params.filter == 'new' && this.params.filter == 'search') {
+            if(this.params.filter == 'online' && this.params.filter == 'search') {
                 this.content.scrollToTop(200);
             } else {
                 this.blocked_img = false;
                 this.params = {
-                    action: 'search',
-                    filter: 'new',
+                    action: 'online',
                     page: 1,
                     list: ''
                 };
@@ -312,7 +311,7 @@ export class HomePage implements OnInit {
 
         this.splashScreen.hide();
         if ( !this.api.back ) {
-            this.api.showLoad();
+            // this.api.showLoad();
 
             if (!this.params.page) {
                 this.params.page = 1;

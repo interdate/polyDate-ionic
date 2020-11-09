@@ -59,6 +59,7 @@ export class EditProfilePage implements OnInit {
           // $('.wrap').scrollTop(99999);
           setTimeout(() => {
               this.content.scrollToBottom(300);
+              this.openSelect2(this.form.lookingFor, 'lookingFor');
              // console.log()
           }, 3000);
       } else {
@@ -97,7 +98,17 @@ export class EditProfilePage implements OnInit {
 
   openSelect2(field, fieldTitle) {
 
-    this.fs.openSelect2(this.form, fieldTitle, this.usersChooses);
+      this.fs.openSelect2(this.form, fieldTitle, this.usersChooses);
+      if (fieldTitle === 'lookingFor' && !this.api.thereForComplete) {
+          // this.alertCtrl.create({
+          //     message: 'לשמירת השינויים לחצו על כפתור "שמור" שבתחתית העמוד',
+          //     buttons: [{
+          //         text: 'OK',
+          //         role: 'cancel',
+          //     }]
+          // });
+      }
+
 
   }
 

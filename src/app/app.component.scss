@@ -636,12 +636,27 @@ button.item-ios:not([detail-none]) .item-inner {
   display: block;
 }
 
+.footer-menu {
+  .favorited, .favorited_me {
+    .inbox_count {
+      background: none;
+      box-shadow: none;
+      top: 11px;
+      border: none;
+      left: -5px;
+      font-size: 12px;
+    }
+  }
+}
+
 ion-button {
   height: 35px;
   font-size: 14px;
 }
 
-
+.footerChecked {
+  color: #e20020;
+}
 
 
 ion-footer.footer-md::before,

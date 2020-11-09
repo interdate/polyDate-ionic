@@ -143,6 +143,7 @@ export class AppComponent {
   }
 
   navigateHome() {
+    this.api.checkedPage = 'online';
     this.menuCloseAll();
     this.api.back = false;
     const navigationExtras: NavigationExtras = {
@@ -312,7 +313,7 @@ export class AppComponent {
       {_id: 'showPhoto', icon: '', title: menu.show_photos, url: '/show-photo', count: ''},
       {_id: 'the_area', icon: '', title: menu.the_arena, url: '/arena', count: ''},
       {_id: 'notifications', icon: '', title: menu.notifications, url: '/notifications', count: ''},
-      {_id: 'stats', icon: 'stats', title: menu.contacts, url: '/profile', count: ''},
+      {_id: 'stats', icon: 'stats', title: menu.contacts, count: ''},
       {_id: '', icon: 'search', title: menu.search, url: '/search', count: ''},
       {_id: '', icon: 'information-circle', title: 'שאלות נפוצות', url: '/faq', count: ''},
       {_id: '', icon: 'mail', title: menu.contact_us, url: '/contact-us', count: ''},
@@ -324,7 +325,7 @@ export class AppComponent {
       {_id: 'showPhoto', icon: '', title: menu.show_photos, url: '/show-photo', count: ''},
       {_id: 'the_area', icon: '', title: menu.the_arena, url: '/arena', count: ''},
       {_id: 'notifications', icon: '', title: menu.notifications, url: '/notifications', count: ''},
-      {_id: 'stats', icon: 'stats', title: menu.contacts, url: '/profile', count: ''},
+      {_id: 'stats', icon: 'stats', title: menu.contacts, count: ''},
       {_id: '', icon: 'search', title: menu.search, url: '/search', count: ''},
       {_id: '', icon: 'information-circle', title: 'שאלות נפוצות', url: '/faq', count: ''},
       {_id: '', icon: 'mail', title: menu.contact_us, url: '/contact-us', count: ''},
@@ -399,10 +400,10 @@ export class AppComponent {
         count: ''
       },
       {
-        _id: 'viewed',
+        _id: 'the_area',
         src_img: '../assets/img/icons/the-arena.png',
         icon: '',
-        list: 'viewed',
+        list: 'the_area',
         title: menu.the_arena,
         url: '/arena',
         count: ''
@@ -429,7 +430,7 @@ export class AppComponent {
 
     this.menu_items_footer2 = [
       {
-        _id: '',
+        _id: 'favorited',
         src_img: '../assets/img/icons/favorited.png',
         icon: '',
         list: 'favorited',
@@ -438,7 +439,7 @@ export class AppComponent {
         count: ''
       },
       {
-        _id: '',
+        _id: 'favorited_me',
         src_img: '../assets/img/icons/favorited_me.png',
         icon: '',
         list: 'favorite_me',
@@ -596,6 +597,11 @@ export class AppComponent {
   }
 
   openPage(page) {
+
+    this.api.checkedPage = page._id;
+    alert(page._id);
+
+    console.log(this.api.checkedPage);
 
     let params = '';
     let logout = false;
@@ -885,7 +891,7 @@ export class AppComponent {
 
 
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     // this.keyboard.hide();
     // $(window).resize();
     this.router.events.subscribe((val) => {
